@@ -115,3 +115,128 @@ cd transformime
 npm install
 npm run build
 ```
+
+## API Reference
+### Functions
+
+<dl>
+<dt><a href="#createTransform">createTransform([transformers], [doc])</a> ⇒ <code>function</code></dt>
+<dd><p>Helper to create a function that transforms a MIME bundle into an HTMLElement
+using the given document and list of transformers.</p>
+</dd>
+</dl>
+
+<a name="Transformime"></a>
+
+## Transformime
+
+Transforms mimetypes into HTMLElements
+
+**Kind**: global class  
+
+* [Transformime](#Transformime)
+    * [new Transformime(transformers)](#new_Transformime_new)
+    * [.transform(bundle, document)](#Transformime+transform) ⇒ <code>Promise.&lt;{mimetype: string, el: HTMLElement}&gt;</code>
+    * [.del(mimetype)](#Transformime+del)
+    * [.get(mimetype)](#Transformime+get) ⇒ <code>function</code>
+    * [.set(mimetype, transformer)](#Transformime+set) ⇒ <code>function</code>
+    * [.push(transformer, mimetype)](#Transformime+push) ⇒ <code>function</code>
+    * [._proxy(transformer, mimetype)](#Transformime+_proxy) ⇒ <code>function</code>
+
+<a name="new_Transformime_new"></a>
+
+### new Transformime(transformers)
+Public constructor
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| transformers | <code>Array.&lt;function()&gt;</code> | list of transformers, in reverse priority order. |
+
+<a name="Transformime+transform"></a>
+
+### transformime.transform(bundle, document) ⇒ <code>Promise.&lt;{mimetype: string, el: HTMLElement}&gt;</code>
+Transforms a mime bundle, using the richest available representation,
+into an HTMLElement.
+
+**Kind**: instance method of <code>[Transformime](#Transformime)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| bundle | <code>any</code> | {mimetype1: data1, mimetype2: data2, ...} |
+| document | <code>Document</code> | Any of window.document, iframe.contentDocument |
+
+<a name="Transformime+del"></a>
+
+### transformime.del(mimetype)
+Deletes all transformers by mimetype.
+
+**Kind**: instance method of <code>[Transformime](#Transformime)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| mimetype | <code>string</code> &#124; <code>Array.&lt;string&gt;</code> | mimetype the data type (e.g. text/plain, text/html, image/png) |
+
+<a name="Transformime+get"></a>
+
+### transformime.get(mimetype) ⇒ <code>function</code>
+Gets a transformer matching the mimetype
+
+**Kind**: instance method of <code>[Transformime](#Transformime)</code>  
+**Returns**: <code>function</code> - Matching transformer  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| mimetype | <code>string</code> | the data type (e.g. text/plain, text/html, image/png) |
+
+<a name="Transformime+set"></a>
+
+### transformime.set(mimetype, transformer) ⇒ <code>function</code>
+Sets a transformer matching the mimetype
+
+**Kind**: instance method of <code>[Transformime](#Transformime)</code>  
+**Returns**: <code>function</code> - inserted transformer function (may be different than arg)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| mimetype | <code>string</code> &#124; <code>Array.&lt;string&gt;</code> | the data type (e.g. text/plain, text/html, image/png) |
+| transformer | <code>function</code> |  |
+
+<a name="Transformime+push"></a>
+
+### transformime.push(transformer, mimetype) ⇒ <code>function</code>
+Appends a transformer to the transformer list.
+
+**Kind**: instance method of <code>[Transformime](#Transformime)</code>  
+**Returns**: <code>function</code> - inserted transformer function (may be different than arg)  
+
+| Param | Type |
+| --- | --- |
+| transformer | <code>function</code> |
+| mimetype | <code>string</code> &#124; <code>Array.&lt;string&gt;</code> |
+
+<a name="Transformime+_proxy"></a>
+
+### transformime._proxy(transformer, mimetype) ⇒ <code>function</code>
+Create a proxy to a transformer, using another mimetype.
+
+**Kind**: instance method of <code>[Transformime](#Transformime)</code>  
+**Returns**: <code>function</code> - transformer  
+
+| Param | Type |
+| --- | --- |
+| transformer | <code>function</code> |
+| mimetype | <code>string</code> &#124; <code>Array.&lt;string&gt;</code> |
+
+<a name="createTransform"></a>
+
+## createTransform([transformers], [doc]) ⇒ <code>function</code>
+Helper to create a function that transforms a MIME bundle into an HTMLElement
+using the given document and list of transformers.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [transformers] | <code>Array.&lt;function()&gt;</code> | List of transformers, in reverse priority order. |
+| [doc] | <code>Document</code> | E.g. window.document, iframe.contentDocument |
